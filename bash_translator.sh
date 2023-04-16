@@ -179,7 +179,7 @@ do
     # for
     if [[ $line == "for"* ]]
     then
-        IFS=' ' read -a rowPart <<<"$line" #slowa z linii gdzie bylo for napisane
+        IFS=' ' read -a rowPart <<<"$line" 
         singleRow=${rowPart[1]}
         if [[ $singleRow == "$" ]]
         then
@@ -188,21 +188,21 @@ do
 
         tempRow=`echo $line | awk -F "{" '{print $NF}'`
         tempRow=${tempRow:0:-1}
-        IFS='..' read -a arr2 <<<"$tempRow" #parametry for
+        IFS='..' read -a arr2 <<<"$tempRow" #for loop parameters
 
         firstArg=${arr2[0]}
         secondArg=${arr2[2]}
         step=${arr2[4]}
 
 
-        if [ $step ] #jesli istnieje step
+        if [ $step ] #if there is a step parameter
         then
             if [[ $firstArg < $secondArg ]]
             then
-                #inkrementacja
+                #incrementation
                 echo "for( int $singleRow=$firstArg; $<=$secondArg; $singleRow+=$step ) {" >>$output
             else
-                #dekrementacja
+                #decrementation
                 echo "for( int $singleRow=$firstArg; $singleRow>=$secondArg; $singleRow-=$step ) {" >>$output
             fi
 
@@ -210,10 +210,10 @@ do
         else
             if [[ $firstArg < $secondArg ]]
             then
-                #inkrementacja
+                #incrementation
                 echo "for( int $singleRow=$firstArg; $singleRow<=$secondArg; $singleRow++ ) {" >>$output
             else
-                #dekrementacja
+                #decrementation
                 echo "for( int $singleRow=$firstArg; $singleRow>=$secondArg; $singleRow-- ) {" >>$output
             fi
         fi
